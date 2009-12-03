@@ -24,3 +24,8 @@ except ImportError:
     irrelevant.
     """
     pass
+except AttributeError:
+    """
+    Same as Above
+    """
+    pass
