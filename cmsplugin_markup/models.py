@@ -15,7 +15,8 @@ class MarkupField(CMSPlugin):
     markup = models.CharField(
             _('Markup'),
             max_length=20,
-            choices=MARKUP_CHOICES
+            choices=MARKUP_CHOICES,
+            default=MARKUP_CHOICES[0][0] if len(MARKUP_CHOICES) == 1 else models.NOT_PROVIDED,
             )
 
     def __unicode__(self):
