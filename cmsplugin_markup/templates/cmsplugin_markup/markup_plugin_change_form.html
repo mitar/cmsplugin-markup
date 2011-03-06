@@ -1,0 +1,6 @@
+{% extends "admin/cms/page/plugin_change_form.html" %}
+	
+{% block extrahead %}{{ block.super }}
+<script type="text/javascript" src="{{ STATIC_URL|default:MEDIA_URL }}cmsplugin_markup/markup.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL|default:MEDIA_URL }}cmsplugin_markup/markup.css" />
+{% endblock %}
