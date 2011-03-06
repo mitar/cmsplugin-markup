@@ -53,4 +53,4 @@ def markup_parser(value, parser_identifier):
     markup_objects = get_list_of_markup_objects(settings.CMS_MARKUP_OPTIONS)
     obj = markup_objects[parser_identifier]()
 
-    return markup_objects[parser_identifier]().parse(value)
+    return obj.parse(value)

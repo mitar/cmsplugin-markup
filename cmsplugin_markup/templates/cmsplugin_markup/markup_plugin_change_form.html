@@ -1,6 +1,22 @@
 {% extends "admin/cms/page/plugin_change_form.html" %}
-	
+
+{% block top %}
+{% if preview %}
+<div id="plugin-preview">
+{{ block.super }}
+</div>
+{% endif %}
+{% endblock %}
+
 {% block extrahead %}{{ block.super }}
+<script type="text/javascript" src="{{ CMS_MEDIA_URL }}js/csrf.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var plugin_id = '{{ object_id|escapejs }}';
+var auto_preview_timeout = 2.0;{% url admin:markup_preview as auto_preview_url %}
+var auto_preview_url = '{{ auto_preview_url|escapejs }}';
+/* ]]> */
+</script>
 <script type="text/javascript" src="{{ STATIC_URL|default:MEDIA_URL }}cmsplugin_markup/markup.js"></script>
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL|default:MEDIA_URL }}cmsplugin_markup/markup.css" />
 {% endblock %}
