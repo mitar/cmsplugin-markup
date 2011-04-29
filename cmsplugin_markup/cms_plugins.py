@@ -32,9 +32,10 @@ class MarkupPlugin(CMSPluginBase):
     def get_plugin_urls(self):
         from django.conf.urls.defaults import patterns, url
 
-        urls = super(MarkupPlugin, self).get_plugin_urls()
+        # If django-cms has get_plugin_urls feature or not
+        urls = getattr(super(MarkupPlugin, self), 'get_plugin_urls', lambda: [])()
         preview_urls = patterns('',
-            url(r'^preview/$', admin.site.admin_view(self.preview), name='markup_preview'),
+            url(r'^preview/$', admin.site.admin_view(self.preview), name='cmsplugin_markup_preview'),
         )
 
         return preview_urls + urls

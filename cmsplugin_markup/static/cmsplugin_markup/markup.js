@@ -71,7 +71,7 @@ jQuery(document).ready(function($) {
     var preview = $(this);
     $('#id_body').autoPreview(auto_preview_url, {
         'markup': $('#id_markup').val(),
-		'plugin_id': plugin_id
+        'plugin_id': plugin_id
       },
       function (textarea, text, data) {
         preview.html(data);
