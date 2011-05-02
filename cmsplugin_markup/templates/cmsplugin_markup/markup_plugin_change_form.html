@@ -13,6 +13,7 @@
 <script type="text/javascript">
 /* <![CDATA[ */
 var plugin_id = '{{ plugin.id|escapejs }}';
+var page_id = '{{ request.current_page.id|escapejs }}';
 var auto_preview_timeout = 2.0;{% url cmsplugin_markup_preview as auto_preview_url %}
 var auto_preview_url = '{{ auto_preview_url|escapejs }}';
 /* ]]> */
