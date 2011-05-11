@@ -1,7 +1,9 @@
 from django.conf import settings
 from django.utils.encoding import smart_str, force_unicode
 
-class Markup(object):
+from cmsplugin_markup.plugins import MarkupBase
+
+class Markup(MarkupBase):
 
     name = 'ReST (ReStructured Text)'
     identifier = 'restructuredtext'

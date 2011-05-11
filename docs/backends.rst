@@ -7,7 +7,7 @@ At its core, cmsplugin-markup is built around the idea of pluggable backends whi
 
 Specifiying available backends
 ------------------------------
-To determine which MarkUp options to give to the user, cmsplugin-markup looks for a setting called CMS_MARKUP_OPTIONS. It expects this to be a tuple in this format::
+To determine which Markup options to give to the user, cmsplugin-markup looks for a setting called CMS_MARKUP_OPTIONS. It expects this to be a tuple in this format::
 
     CMS_MARKUP_OPTIONS = (
         'cmsplugin_markup.plugins.markdown',
@@ -20,9 +20,11 @@ Each entry should be a string and should be a complete path to a python package 
 Backend API
 -----------
 
-To be used as a MarkUp backend, a python package must be laid out in a specific fashion and contain a class that must implement the following methods and variables. This class must be named Markup. An example class is below.::
+To be used as a Markup backend, a python package must be laid out in a specific fashion and contain a class that must implement the following methods and variables. This class must be named Markup. An example class is below.::
 
-    class Markup(object):
+    from cmsplugin_markup.plugins import MarkupBase
+
+    class Markup(MarkupBase):
         name = 'Human Readable Name for the Mark Up'
         identifier = 'Internal Identifier for Mark Up'
 
@@ -33,9 +35,19 @@ This barebones class contains all the required pieces to work.
 
 The ``name`` variable is a human readable name and may be any length. This is the name that will be presented to the user as the option. 
 
-The ``identifier`` variable is stored as a CharField and anything that is allowed in a CharField is allowed in this. It must be unique across all the installed MarkUp Parsers and may be at most 20 characters long. 
+The ``identifier`` variable is stored as a CharField and anything that is allowed in a CharField is allowed in this. It must be unique across all the installed Markup Parsers and may be at most 20 characters long.
 
 The ``parse`` function must accept self, and a value argument. This function is where you will impliment the actual parsing of the user's input. At this point in time this function should fail silently and simply return an unchanged string. This might change in the future.
+
+There are some additional methods and a variable if markup supports adding plugins. In this case ``text_enabled_plugins`` variable should be set to ``True`` and the following methods should be defined.
+
+``plugin_id_list(self, text)`` should return the list of plugins inserted and currently used in the markup text.
+
+``replace_plugins(self, text, id_dict)`` should replace references to plugins in the markup text with new ids.
+
+``plugin_markup(self)`` should return JavaScript code for anonymous function which construct plugin markup given ``plugin_id``, ``icon_src`` and ``icon_alt`` arguments. It should be marked as safe to prevent escaping.
+
+``plugin_regexp(self)`` should return JavaScript code for anonymous function which construct plugin regexp given plugin_id. It should be marked as safe to prevent escaping.
 
 Directory Layout
 ~~~~~~~~~~~~~~~~

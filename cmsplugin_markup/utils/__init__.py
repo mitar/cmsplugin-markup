@@ -1,3 +1,2 @@
-from cmsplugin_markup.utils.markup import compile_markup_choices
-from cmsplugin_markup.utils.markup import get_list_of_markup_objects
-from cmsplugin_markup.utils.markup import markup_parser
+from cmsplugin_markup.utils.markup import *
+from cmsplugin_markup.utils.plugins import *

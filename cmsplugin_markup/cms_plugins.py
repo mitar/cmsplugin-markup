@@ -12,6 +12,7 @@ from django.utils.translation import ugettext as _
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
+from cmsplugin_markup import utils
 from cmsplugin_markup.models import MarkupField
 from cmsplugin_markup.forms import MarkupForm
 
@@ -28,6 +29,27 @@ class MarkupPlugin(CMSPluginBase):
             'placeholder': placeholder,
             })
         return context
+
+    def save_model(self, request, obj, form, change):
+        obj.clean_plugins()
+        super(MarkupPlugin, self).save_model(request, obj, form, change)
+
+    def change_view(self, request, object_id, extra_context={}):
+        extra_context.update({
+            'text_plugins': plugin_pool.get_text_enabled_plugins(self.placeholder, self.page),
+            'name': 'markupeditor',
+            'used_plugins': pluginmodel.CMSPlugin.objects.filter(parent=object_id),
+            'markup_plugins': [c() for c in utils.get_list_of_markup_classes().values()],
+            })
+        return super(MarkupPlugin, self).change_view(request, object_id, extra_context=extra_context)
+
+    def add_view(self, request, form_url='', extra_context={}):
+        extra_context.update({
+            'text_plugins': plugin_pool.get_text_enabled_plugins(self.placeholder, self.page),
+            'name': 'markupeditor',
+            'markup_plugins': [c() for c in utils.get_list_of_markup_classes().values()],
+            })
+        return super(MarkupPlugin, self).add_view(request, form_url, extra_context=extra_context);
 
     def get_plugin_urls(self):
         from django.conf.urls.defaults import patterns, url
@@ -47,6 +69,9 @@ class MarkupPlugin(CMSPluginBase):
         if not shortcuts.get_object_or_404(pluginmodel.CMSPlugin, pk=request.POST.get('plugin_id')).placeholder.has_change_permission(request):
             raise http.Http404
         
+        if not request.POST.get('markup'):
+            return http.HttpResponse('')
+
         return http.HttpResponse(markup.markup_parser(request.POST.get('text'), request.POST.get('markup')))
 
 plugin_pool.register_plugin(MarkupPlugin)

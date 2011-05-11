@@ -12,3 +12,40 @@ div.django-grip {
 	height: 5px;
 	overflow: hidden;
 }
+
+#plugins_list .divimg {
+	width: 32px;
+	height: 32px;
+	float: left;
+	margin-right: 5px;
+	text-align: center;
+}
+
+#plugins_list .divimg img {
+	max-width: 32px;
+	max-height: 32px;
+	cursor: pointer;
+}
+
+#plugins_list span {
+	cursor: pointer;
+}
+
+#plugins_list ul {
+	padding: 0;
+}
+
+#plugins_list li {
+	min-height: 32px;
+	list-style-image: none;
+	list-style-type: none;
+	margin: 0;
+}
+
+#plugins_list li:hover {
+	background-color: #FFFFE0;
+}
+
+.iftextplugins {
+	display: none;
+}

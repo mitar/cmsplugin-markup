@@ -19,9 +19,30 @@ class MarkupField(CMSPlugin):
             default=MARKUP_CHOICES[0][0] if len(MARKUP_CHOICES) == 1 else models.NOT_PROVIDED,
             )
 
+    search_fields = ('body_html',)
+
     def __unicode__(self):
         return u'%s' %(truncate_words(strip_tags(self.body_html), 3)[:30]+'...')
 
     def save(self, *args, **kwargs):
         self.body_html = utils.markup_parser(self.body, self.markup)
         return super(MarkupField, self).save(*args, **kwargs)
+
+    def clean_plugins(self):
+        ids = utils.plugin_id_list(self.body, self.markup)
+        plugins = CMSPlugin.objects.filter(parent=self)
+        for plugin in plugins:
+            if not str(plugin.pk) in ids:
+                plugin.delete() #delete plugins that are not referenced in the markup anymore
+
+    def post_copy(self, old_instance, ziplist):
+        """
+        Fix references to plugins
+        """
+
+        replace_ids = {}
+        for new, old in ziplist:
+            replace_ids[old.pk] = new.pk
+
+        self.body = utils.replace_plugins(old_instance.markupfield.body, replace_ids, self.markup)
+        self.save()
