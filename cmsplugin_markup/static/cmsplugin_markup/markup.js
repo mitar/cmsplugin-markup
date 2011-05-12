@@ -222,8 +222,6 @@ function plugin_admin_markup(plugin_id, icon_src, icon_alt) {
 function showhideplugins() {
   (function ($) {
     var plugin = markupPlugins[$('#id_markup').val()];
-    window.console.log($('#id_markup').val());
-    window.console.log(markupPlugins);
     if ((typeof(plugin) !== "undefined") && plugin['textenabled']) {
       $('.iftextplugins').show();
     }

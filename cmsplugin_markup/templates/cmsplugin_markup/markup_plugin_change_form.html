@@ -94,6 +94,17 @@ jQuery(document).ready(function($) {
     add_plugin_for_markup(pluginvalue, parent_id, language, '{{ name|escapejs }}')
   }).css("cursor", "pointer").css("margin", "5px");
 
+  $('<input/>').attr({
+    'type': 'button',
+    'value': '{% trans "Refresh preview" %}',
+    'id': 'markup_preview_button_id'
+  }).css({
+    'margin': '0 0 0 5px'
+  }).click(function() {
+    forceAutoPreview = true;
+    $('#id_body').blur();
+  }).insertAfter('#markupfield_form :submit');
+
 {% for p in used_plugins %}
   add_plugin_to_list('{{ p.pk|escapejs }}', '{{ p.get_instance_icon_src|escapejs }}', '{{ p.get_instance_icon_alt|escapejs }}');
 {% endfor %}
