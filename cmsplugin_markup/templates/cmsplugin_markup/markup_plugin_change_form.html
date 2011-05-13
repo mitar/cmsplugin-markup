@@ -113,6 +113,7 @@ jQuery(document).ready(function($) {
 {% for p in markup_plugins %}
 markupPlugins['{{ p.identifier|escapejs }}'] = {
   'textenabled': {{ p.text_enabled_plugins|yesno:"true,false" }},
+  'isdynamic': {{ p.is_dynamic|yesno:"true,false" }},
   'markup': {{ p.plugin_markup|default:"null" }},
   'regex': {{ p.plugin_regexp|default:"null" }}
 };

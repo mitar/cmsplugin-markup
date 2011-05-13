@@ -1,5 +1,6 @@
 class MarkupBase(object):
     text_enabled_plugins = False
+    is_dynamic = False
 
     def plugin_id_list(self, text):
         """

@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext as _
+from django.utils.safestring import mark_safe
 from django.utils.html import strip_tags
 from django.utils.text import truncate_words
 from django.conf import settings
@@ -18,6 +19,7 @@ class MarkupField(CMSPlugin):
             choices=MARKUP_CHOICES,
             default=MARKUP_CHOICES[0][0] if len(MARKUP_CHOICES) == 1 else models.NOT_PROVIDED,
             )
+    dynamic = models.BooleanField(_('Render every time'), default=False, help_text=_('Should be the content rendered every time the page is displayed or should it be rendered only when saved?'))
 
     search_fields = ('body_html',)
 
@@ -25,8 +27,17 @@ class MarkupField(CMSPlugin):
         return u'%s' %(truncate_words(strip_tags(self.body_html), 3)[:30]+'...')
 
     def save(self, *args, **kwargs):
+        # We store it in any case to also check the parser for possible exceptions and to use it for __unicode__
         self.body_html = utils.markup_parser(self.body, self.markup)
+        if not utils.get_markup_object(self.markup).is_dynamic:
+            self.dynamic = False
         return super(MarkupField, self).save(*args, **kwargs)
+
+    def render(self):
+        if self.dynamic:
+            return mark_safe(utils.markup_parser(self.body, self.markup))
+        else:
+            return mark_safe(self.body_html)
 
     def clean_plugins(self):
         ids = utils.plugin_id_list(self.body, self.markup)

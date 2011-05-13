@@ -219,7 +219,7 @@ function plugin_admin_markup(plugin_id, icon_src, icon_alt) {
   return markupPlugins[$('#id_markup').val()]['markup'](plugin_id, icon_src, icon_alt);
 }
 
-function showhideplugins() {
+function markupchange() {
   (function ($) {
     var plugin = markupPlugins[$('#id_markup').val()];
     if ((typeof(plugin) !== "undefined") && plugin['textenabled']) {
@@ -228,6 +228,12 @@ function showhideplugins() {
     else {
       $('.iftextplugins').hide();
     }
+    if ((typeof(plugin) !== "undefined") && plugin['isdynamic']) {
+      $('#id_dynamic').closest('.form-row').show();
+    }
+    else {
+      $('#id_dynamic').closest('.form-row').hide();
+    }
   })(jQuery);
 }
 
@@ -235,7 +241,7 @@ jQuery(document).ready(function($) {
   $('#id_markup').change(function() {
     forceAutoPreview = true;
     $('#id_body').blur();
-    showhideplugins();
+    markupchange();
   });
-  showhideplugins();
+  markupchange();
 });
