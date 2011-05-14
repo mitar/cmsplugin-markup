@@ -37,7 +37,7 @@ class MarkupPlugin(CMSPluginBase):
 
     def change_view(self, request, object_id, extra_context={}):
         extra_context.update({
-            'text_plugins': plugin_pool.get_text_enabled_plugins(self.placeholder, self.page),
+            'text_plugins': [p() for p in plugin_pool.get_text_enabled_plugins(self.placeholder, self.page)],
             'name': 'markupeditor',
             'used_plugins': pluginmodel.CMSPlugin.objects.filter(parent=object_id),
             'markup_plugins': [c() for c in utils.get_list_of_markup_classes().values()],
@@ -46,7 +46,7 @@ class MarkupPlugin(CMSPluginBase):
 
     def add_view(self, request, form_url='', extra_context={}):
         extra_context.update({
-            'text_plugins': plugin_pool.get_text_enabled_plugins(self.placeholder, self.page),
+            'text_plugins': [p() for p in plugin_pool.get_text_enabled_plugins(self.placeholder, self.page)],
             'name': 'markupeditor',
             'markup_plugins': [c() for c in utils.get_list_of_markup_classes().values()],
         })
@@ -67,8 +67,13 @@ class MarkupPlugin(CMSPluginBase):
         if request.method != 'POST':
             return http.HttpResponseNotAllowed(['POST'])
 
-        plugin = shortcuts.get_object_or_404(MarkupField, pk=request.POST.get('plugin_id'))
+        try:
+            plugin = MarkupField.objects.get(pk=request.POST.get('plugin_id'))
+        except MarkupField.DoesNotExist:
+            plugin = shortcuts.get_object_or_404(pluginmodel.CMSPlugin, pk=request.POST.get('plugin_id'))
+
         placeholder = plugin.placeholder
+
         if not placeholder.has_change_permission(request):
             raise http.Http404
         
