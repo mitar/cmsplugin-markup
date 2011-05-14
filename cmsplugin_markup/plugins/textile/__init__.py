@@ -8,7 +8,7 @@ class Markup(MarkupBase):
     name = 'Textile'
     identifier = 'textile'
 
-    def parse(self, value):
+    def parse(self, value, context=None, placeholder=None):
         try:
             import textile
         except ImportError:

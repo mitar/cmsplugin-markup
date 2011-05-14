@@ -8,7 +8,7 @@ class Markup(MarkupBase):
     name = 'ReST (ReStructured Text)'
     identifier = 'restructuredtext'
 
-    def parse(self, value):
+    def parse(self, value, context=None, placeholder=None):
         try:
             from docutils.core import publish_parts
         except ImportError:

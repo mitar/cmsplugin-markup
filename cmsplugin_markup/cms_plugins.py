@@ -2,6 +2,7 @@ from django.conf import settings
 
 from django import http
 from django import shortcuts
+from django import template
 from django.contrib import admin
 
 from cms.models import pluginmodel
@@ -27,7 +28,7 @@ class MarkupPlugin(CMSPluginBase):
         context.update({
             'object': instance,
             'placeholder': placeholder,
-            })
+        })
         return context
 
     def save_model(self, request, obj, form, change):
@@ -40,7 +41,7 @@ class MarkupPlugin(CMSPluginBase):
             'name': 'markupeditor',
             'used_plugins': pluginmodel.CMSPlugin.objects.filter(parent=object_id),
             'markup_plugins': [c() for c in utils.get_list_of_markup_classes().values()],
-            })
+        })
         return super(MarkupPlugin, self).change_view(request, object_id, extra_context=extra_context)
 
     def add_view(self, request, form_url='', extra_context={}):
@@ -48,7 +49,7 @@ class MarkupPlugin(CMSPluginBase):
             'text_plugins': plugin_pool.get_text_enabled_plugins(self.placeholder, self.page),
             'name': 'markupeditor',
             'markup_plugins': [c() for c in utils.get_list_of_markup_classes().values()],
-            })
+        })
         return super(MarkupPlugin, self).add_view(request, form_url, extra_context=extra_context);
 
     def get_plugin_urls(self):
@@ -65,13 +66,18 @@ class MarkupPlugin(CMSPluginBase):
     def preview(self, request):
         if request.method != 'POST':
             return http.HttpResponseNotAllowed(['POST'])
-        
-        if not shortcuts.get_object_or_404(pluginmodel.CMSPlugin, pk=request.POST.get('plugin_id')).placeholder.has_change_permission(request):
+
+        plugin = shortcuts.get_object_or_404(MarkupField, pk=request.POST.get('plugin_id'))
+        placeholder = plugin.placeholder
+        if not placeholder.has_change_permission(request):
             raise http.Http404
         
         if not request.POST.get('markup'):
             return http.HttpResponse('')
 
-        return http.HttpResponse(markup.markup_parser(request.POST.get('text'), request.POST.get('markup')))
+        return http.HttpResponse(markup.markup_parser(request.POST.get('text'), request.POST.get('markup'), template.RequestContext(request, {
+                'object': plugin,
+                'placeholder': placeholder,
+            }), placeholder))
 
 plugin_pool.register_plugin(MarkupPlugin)

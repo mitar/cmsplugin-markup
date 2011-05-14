@@ -8,7 +8,7 @@ class Markup(MarkupBase):
     name = 'Markdown'
     identifier = 'markdown'
 
-    def parse(self, value):
+    def parse(self, value, context=None, placeholder=None):
         try:
             import markdown
         except ImportError:

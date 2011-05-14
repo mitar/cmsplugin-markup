@@ -56,10 +56,10 @@ def get_markup_object(markup_id):
     markup_classes = get_list_of_markup_classes(settings.CMS_MARKUP_OPTIONS)
     return markup_classes[markup_id]()
 
-def markup_parser(value, parser_identifier):
+def markup_parser(value, parser_identifier, context=None, placeholder=None):
     """
     Takes a string and a parser identifier and returns a string parsed
     by that parser. If anything goes wrong it returns the original string
     """
 
-    return get_markup_object(parser_identifier).parse(value)
+    return get_markup_object(parser_identifier).parse(value, context, placeholder)

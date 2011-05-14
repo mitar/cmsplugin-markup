@@ -33,9 +33,9 @@ class MarkupField(CMSPlugin):
             self.dynamic = False
         return super(MarkupField, self).save(*args, **kwargs)
 
-    def render(self):
+    def render(self, context):
         if self.dynamic:
-            return mark_safe(utils.markup_parser(self.body, self.markup))
+            return mark_safe(utils.markup_parser(self.body, self.markup, context, context.get('placeholder')))
         else:
             return mark_safe(self.body_html)
 
