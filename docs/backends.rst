@@ -28,7 +28,7 @@ To be used as a Markup backend, a python package must be laid out in a specific 
         name = 'Human Readable Name for the Mark Up'
         identifier = 'Internal Identifier for Mark Up'
 
-        def parse(self, value):
+        def parse(self, value, context=None, placeholder=None):
             return value
 
 This barebones class contains all the required pieces to work. 
@@ -37,7 +37,7 @@ The ``name`` variable is a human readable name and may be any length. This is th
 
 The ``identifier`` variable is stored as a CharField and anything that is allowed in a CharField is allowed in this. It must be unique across all the installed Markup Parsers and may be at most 20 characters long.
 
-The ``parse`` function must accept self, and a value argument. This function is where you will impliment the actual parsing of the user's input. At this point in time this function should fail silently and simply return an unchanged string. This might change in the future.
+The ``parse`` function must accept self, and a value argument. It must accept also possible Django template rendering context and current placeholder. Those are given when rendering markup every time the page is displayed is enabled; to give more information about the context and location in which they are rendered. This function is where you will impliment the actual parsing of the user's input. At this point in time this function should fail silently and simply return an unchanged string. This might change in the future.
 
 There are some additional methods and a variable if markup supports adding plugins. In this case ``text_enabled_plugins`` variable should be set to ``True`` and the following methods should be defined.
 
@@ -49,10 +49,12 @@ There are some additional methods and a variable if markup supports adding plugi
 
 ``plugin_regexp(self)`` should return JavaScript code for anonymous function which construct plugin regexp given plugin_id. It should be marked as safe to prevent escaping.
 
+Some markups support dynamically rendered output (like macros) which could be rendered every time differently. If your markup supports this you can set ``is_dynamic`` to ``True`` and this will then give users an option to enable rendering of the content every time the page (Markup plugin) is displayed. Otherwise the content is rendered only once, when saved.
+
 Directory Layout
 ~~~~~~~~~~~~~~~~
 
-A MarkUp Backend Package should be laid out as follows
+A Markup Backend Package should be laid out as follows
 
 backend_name/
 - __init__.py

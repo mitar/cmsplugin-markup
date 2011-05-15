@@ -55,7 +55,7 @@ version = __import__(PACKAGE_NAME).get_version()
 setup(
         name='cmsplugin-markup',
         version=version.replace(' ', '-'),
-        description='Adds a plugin based MarkUp System for django-cms',
+        description='Adds a plugin based Markup System for django-cms',
         author='Xenofox, LLC',
         author_email='info@xenofox.com',
         url='http://bitbucket.org/xenofox/cmsplugin-markup',
