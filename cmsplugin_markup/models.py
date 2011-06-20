@@ -19,7 +19,7 @@ class MarkupField(CMSPlugin):
             choices=MARKUP_CHOICES,
             default=MARKUP_CHOICES[0][0] if len(MARKUP_CHOICES) == 1 else models.NOT_PROVIDED,
             )
-    dynamic = models.BooleanField(_('Render every time'), default=False, help_text=_('Should be the content rendered every time the page is displayed or should it be rendered only when saved?'))
+    dynamic = models.BooleanField(_('Render every time'), default=settings.CMS_MARKUP_RENDER_ALWAYS, help_text=_('Should be the content rendered every time the page is displayed or should it be rendered only when saved?'))
 
     search_fields = ('body_html',)
 

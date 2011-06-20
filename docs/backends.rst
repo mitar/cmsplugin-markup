@@ -17,6 +17,8 @@ To determine which Markup options to give to the user, cmsplugin-markup looks fo
 
 Each entry should be a string and should be a complete path to a python package that contains the required attributes.
 
+You can also configure what is a default value for markups which support dynamically rendered output, using ``CMS_MARKUP_RENDER_ALWAYS`` setting (by default ``True``).
+
 Backend API
 -----------
 
@@ -49,7 +51,7 @@ There are some additional methods and a variable if markup supports adding plugi
 
 ``plugin_regexp(self)`` should return JavaScript code for anonymous function which construct plugin regexp given plugin_id. It should be marked as safe to prevent escaping.
 
-Some markups support dynamically rendered output (like macros) which could be rendered every time differently. If your markup supports this you can set ``is_dynamic`` to ``True`` and this will then give users an option to enable rendering of the content every time the page (Markup plugin) is displayed. Otherwise the content is rendered only once, when saved.
+Some markups support dynamically rendered output (like macros) which could be rendered every time differently. If your markup supports this you can set ``is_dynamic`` to ``True`` and this will then give users an option to enable rendering of the content every time the page (Markup plugin) is displayed (default value is configured by ``CMS_MARKUP_RENDER_ALWAYS`` setting). Otherwise the content is rendered only once, when saved.
 
 Directory Layout
 ~~~~~~~~~~~~~~~~
