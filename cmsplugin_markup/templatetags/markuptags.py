@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 
 register = template.Library()
 
@@ -11,4 +12,7 @@ class RenderMarkupNode(template.Node):
         try:
             return context['object'].render(context)
         except:
-            return u''
+            if settings.TEMPLATE_DEBUG:
+                raise
+            else:
+                return u''

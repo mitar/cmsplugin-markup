@@ -25,3 +25,6 @@ class MarkupBase(object):
         Returns JavaScript code for anonymous function which construct plugin regexp given plugin_id. It should be marked as safe to prevent escaping.
         """
         return None
+
+class MarkupPluginException(Exception):
+    pass

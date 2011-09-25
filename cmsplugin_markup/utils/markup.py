@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from cmsplugin_markup.plugins import MarkupBase
+from cmsplugin_markup.plugins import MarkupBase, MarkupPluginException
 
 def get_list_of_markup_classes(markup_options=settings.CMS_MARKUP_OPTIONS):
     """
@@ -12,26 +12,21 @@ def get_list_of_markup_classes(markup_options=settings.CMS_MARKUP_OPTIONS):
     objects = {}
 
     for markup in markup_options:
-        try:
-            __import__(markup)
-            module = sys.modules[markup]
-        except ImportError:
-            continue
+        __import__(markup)
+        module = sys.modules[markup]
 
         try:
             # Check for required attributes
-            if not hasattr(module.Markup, 'name'):
-                continue
-            if not hasattr(module.Markup, 'identifier'):
-                continue
-            if not hasattr(module.Markup, 'parse'):
-                continue
+            for attribute in ['name', 'identifier', 'parse']:
+                if not hasattr(module.Markup, attribute):
+                    raise MarkupPluginException("Markup plugin '%s' is missing '%s' attribute" % (markup, attribute))
             if not issubclass(module.Markup, MarkupBase):
-                continue
+                raise MarkupPluginException("Markup plugin '%s' is not a subclass of MarkupBase")
 
             objects[module.Markup.identifier] = module.Markup
         except AttributeError:
-            continue
+            raise MarkupPluginException("Markup plugin module '%s' is missing Markup class", (markup,))
+
     return objects
 
 def compile_markup_choices(markup_options):
