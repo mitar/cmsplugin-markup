@@ -13,6 +13,8 @@ MARKUP_CHOICES = utils.compile_markup_choices(settings.CMS_MARKUP_OPTIONS)
 class MarkupField(CMSPlugin):
     body = models.TextField(_('Body'))
     body_html = models.TextField(blank=True)
+    body_scripts = models.TextField(blank=True)
+    body_stylesheets = models.TextField(blank=True)
     markup = models.CharField(
             _('Markup'),
             max_length=20,
@@ -28,15 +30,23 @@ class MarkupField(CMSPlugin):
 
     def save(self, *args, **kwargs):
         # We store it in any case to also check the parser for possible exceptions and to use it for __unicode__
-        self.body_html = utils.markup_parser(self.body, self.markup)
+        (content, parser) = utils.markup_parser(self.body, self.markup)
+        self.body_html = content
+        self.body_scripts = utils.content_scripts(parser.get_scripts())
+        self.body_stylesheets = utils.content_stylesheets(parser.get_stylesheets())
         if not utils.get_markup_object(self.markup).is_dynamic:
             self.dynamic = False
         return super(MarkupField, self).save(*args, **kwargs)
 
     def render(self, context):
         if self.dynamic:
-            return mark_safe(utils.markup_parser(self.body, self.markup, context, context.get('placeholder')))
+            (content, parser) = utils.markup_parser(self.body, self.markup, context, context.get('placeholder'))
+            context['markup_scripts'] = context.get('markup_scripts', []) + [utils.content_scripts(parser.get_scripts())]
+            context['markup_stylesheets'] = context.get('markup_stylesheets', []) + [utils.content_stylesheets(parser.get_stylesheets())]
+            return mark_safe(content)
         else:
+            context['markup_scripts'] = context.get('markup_scripts', []) + [self.body_scripts]
+            context['markup_stylesheets'] = context.get('markup_stylesheets', []) + [self.body_stylesheets]
             return mark_safe(self.body_html)
 
     def clean_plugins(self):

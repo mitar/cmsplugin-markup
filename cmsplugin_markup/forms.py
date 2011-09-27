@@ -7,7 +7,7 @@ from cmsplugin_markup.models import MarkupField
 class MarkupForm(ModelForm):
     class Meta:
         model = MarkupField
-        exclude = ('body_html',)
+        exclude = ('body_html', 'body_scripts', 'body_stylesheets')
         widgets = {
             'body': widgets.Textarea(attrs={'class': 'django-resizable'}),
         }

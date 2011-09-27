@@ -24,6 +24,9 @@ class MarkupPlugin(CMSPluginBase):
     render_template = 'cmsplugin_markup/markup.html'
     change_form_template = 'cmsplugin_markup/markup_plugin_change_form.html'
 
+    class PluginMedia:
+        js = ('%scmsplugin_markup/markup.js' % (getattr(settings, 'STATIC_URL', settings.MEDIA_URL),),)
+
     def render(self, context, instance, placeholder):
         context.update({
             'object': instance,
@@ -61,7 +64,11 @@ class MarkupPlugin(CMSPluginBase):
             url(r'^preview/$', admin.site.admin_view(self.preview), name='cmsplugin_markup_preview'),
         )
 
-        return preview_urls + urls
+        plugin_urls = []
+        for c in utils.get_list_of_markup_classes().values():
+            plugin_urls.extend(c().get_plugin_urls())
+
+        return preview_urls + plugin_urls + urls
 
     def preview(self, request):
         if request.method != 'POST':
@@ -80,9 +87,13 @@ class MarkupPlugin(CMSPluginBase):
         if not request.POST.get('markup'):
             return http.HttpResponse('')
 
-        return http.HttpResponse(markup.markup_parser(request.POST.get('text'), request.POST.get('markup'), template.RequestContext(request, {
+        (content, parser) = markup.markup_parser(request.POST.get('text'), request.POST.get('markup'), template.RequestContext(request, {
                 'object': plugin,
                 'placeholder': placeholder,
-            }), placeholder))
+            }), placeholder)
+
+        content += utils.content_scripts(parser.get_scripts()) + utils.content_stylesheets(parser.get_stylesheets())
+
+        return http.HttpResponse(content)
 
 plugin_pool.register_plugin(MarkupPlugin)

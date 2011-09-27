@@ -1,0 +1,13 @@
+def content_scripts(scripts):
+    output = ""
+    for script in scripts:
+        output += '<script type="%s" src="%s"></script>' % (script.get('type', "text/javascript"), script['href'])
+    return output
+
+def content_stylesheets(stylesheets):
+    output = ""
+    for stylesheet in stylesheets:
+        output += 'jQuery.loadStyleSheet("%s", "%s");\n' % (stylesheet['href'], stylesheet.get('type', "text/css"))
+    if output:
+        output = '<script type="text/javascript">\n' + output + '</script>\n'
+    return output

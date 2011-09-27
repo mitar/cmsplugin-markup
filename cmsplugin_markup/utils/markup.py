@@ -17,7 +17,7 @@ def get_list_of_markup_classes(markup_options=settings.CMS_MARKUP_OPTIONS):
 
         try:
             # Check for required attributes
-            for attribute in ['name', 'identifier', 'parse']:
+            for attribute in ['name', 'identifier']:
                 if not hasattr(module.Markup, attribute):
                     raise MarkupPluginException("Markup plugin '%s' is missing '%s' attribute" % (markup, attribute))
             if not issubclass(module.Markup, MarkupBase):
@@ -53,8 +53,9 @@ def get_markup_object(markup_id):
 
 def markup_parser(value, parser_identifier, context=None, placeholder=None):
     """
-    Takes a string and a parser identifier and returns a string parsed
-    by that parser. If anything goes wrong it returns the original string
+    Takes a string and a parser identifier and returns a tuple with string parsed
+    by that parser and parser object itself.
     """
 
-    return get_markup_object(parser_identifier).parse(value, context, placeholder)
+    parser = get_markup_object(parser_identifier)
+    return (parser.parse(value, context, placeholder), parser)
