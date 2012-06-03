@@ -1,1 +1,1 @@
-{% load markuptags %}{% rendermarkup %}{% renderstylesheets %}{% renderscripts %}
+{% load markuptags sekizai_tags %}{% rendermarkup %}{% for stylesheet in markup_stylesheets %}{% addtoblock "css" %}<link rel="stylesheet" type="{{ stylesheet.type|default:"text/css" }}" href="{{ STATIC_URL|default:MEDIA_URL }}{{ stylesheet.href }}" />{% endaddtoblock %}{% endfor %}{% for script in markup_scripts %}{% addtoblock "js" %}<script type="{{ script.type|default:"text/javascript" }}" src="{{ script.href }}"></script>{% endaddtoblock %}{% endfor %}

@@ -1,5 +1,3 @@
-from django.conf import settings
-
 from django import http
 from django import shortcuts
 from django import template
@@ -23,9 +21,6 @@ class MarkupPlugin(CMSPluginBase):
     form = MarkupForm
     render_template = 'cmsplugin_markup/markup.html'
     change_form_template = 'cmsplugin_markup/markup_plugin_change_form.html'
-
-    class PluginMedia:
-        js = ('%scmsplugin_markup/markup.js' % (getattr(settings, 'STATIC_URL', settings.MEDIA_URL),),)
 
     def render(self, context, instance, placeholder):
         context.update({

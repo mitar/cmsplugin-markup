@@ -72,7 +72,7 @@ var forceAutoPreview = false;
 })(jQuery);
 
 jQuery(document).ready(function($) {
-  $.fn.cmsPatchCSRF();
+  CMS.API.Security.csrf();
 });
 
 jQuery(document).ready(function($) {

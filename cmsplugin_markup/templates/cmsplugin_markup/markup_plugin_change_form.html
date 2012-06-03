@@ -31,7 +31,8 @@
 {% endblock %}
 
 {% block extrahead %}{{ block.super }}
-<script type="text/javascript" src="{{ CMS_MEDIA_URL }}js/csrf.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}cms/js/libs/classy.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}cms/js/plugins/cms.base.js"></script>
 <script type="text/javascript">
 /* <![CDATA[ */
 var plugin_id = '{{ plugin.id|escapejs }}';
@@ -40,10 +41,10 @@ var auto_preview_timeout = 2.0;{% url cmsplugin_markup_preview as auto_preview_u
 var auto_preview_url = '{{ auto_preview_url|escapejs }}';
 /* ]]> */
 </script>
-<script type="text/javascript" src="{{ STATIC_URL|default:MEDIA_URL }}cmsplugin_markup/markup_admin.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL|default:MEDIA_URL }}cmsplugin_markup/markup.js"></script>
-<script type="text/javascript" src="{{ CMS_MEDIA_URL }}js/lib/ui.core.js"></script>
-<script type="text/javascript" src="{{ CMS_MEDIA_URL }}js/placeholder_editor_registry.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}cmsplugin_markup/markup_admin.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}cmsplugin_markup/markup.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}cms/js/libs/jquery.ui.core.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}cms/js/placeholder_editor_registry.js"></script>
 <script type="text/javascript">
 /* <![CDATA[ */
 
@@ -124,9 +125,6 @@ markupPlugins['{{ p.identifier|escapejs }}'] = {
 {% endfor %}
 /* ]]> */
 </script>
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL|default:MEDIA_URL }}cmsplugin_markup/markup.css" />
-<link rel="stylesheet" type="text/css" href="{{ CMS_MEDIA_URL }}css/jquery/cupertino/jquery-ui.css" />
-{% for p in text_plugins %}
-{{ p.pluginmedia }}
-{% endfor %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}cmsplugin_markup/markup.css" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}cms/css/jquery/cupertino/jquery-ui.css" />
 {% endblock %}
