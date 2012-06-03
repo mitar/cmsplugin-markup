@@ -107,7 +107,7 @@ jQuery(document).ready(function($) {
     }).click(function() {
       forceAutoPreview = true;
       $('#id_body').blur();
-	}).insertAfter('#markupfield_form :submit');
+	}).insertAfter('#markupfield_form :submit[name="_cancel"]');
   });
 
 {% for p in used_plugins %}
