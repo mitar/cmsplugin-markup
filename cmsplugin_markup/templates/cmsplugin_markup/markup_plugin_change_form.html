@@ -5,7 +5,9 @@
 {% block top %}
 {% if preview %}
 <div id="plugin-preview">
+{% with dont_use_sekizai=1 %}
 {{ block.super }}
+{% endwith %}
 </div>
 {% endif %}
 {% endblock %}

@@ -12,8 +12,9 @@ from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
 from cmsplugin_markup import utils
-from cmsplugin_markup.models import MarkupField
 from cmsplugin_markup.forms import MarkupForm
+from cmsplugin_markup.models import MarkupField
+from cmsplugin_markup.templatetags import markuptags
 
 class MarkupPlugin(CMSPluginBase):
     model = MarkupField
@@ -87,7 +88,7 @@ class MarkupPlugin(CMSPluginBase):
                 'placeholder': placeholder,
             }), placeholder)
 
-        content += utils.content_scripts(parser.get_scripts()) + utils.content_stylesheets(parser.get_stylesheets())
+        content += markuptags.content_scripts(parser.get_scripts()) + markuptags.content_stylesheets(parser.get_stylesheets())
 
         return http.HttpResponse(content)
 

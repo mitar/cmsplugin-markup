@@ -1,5 +1,6 @@
 from django import template
 from django.conf import settings
+from django.utils import html, safestring
 
 register = template.Library()
 
@@ -17,28 +18,18 @@ class RenderMarkupNode(template.Node):
             else:
                 return u''
 
-@register.tag
-def renderstylesheets(parser, token):
-    return RenderMarkupStylesheetsNode()
+@register.filter
+def content_scripts(scripts):
+    output = ""
+    for script in scripts:
+        output += '<script type="%s" src="%s"></script>' % (script.get('type', 'text/javascript'), script['href'])
+    return safestring.mark_safe(output)
 
-class RenderMarkupStylesheetsNode(template.Node):
-    def render(self, context):
-        if 'markup_stylesheets' in context:
-            stylesheets = "".join(context['markup_stylesheets'])
-            del context['markup_stylesheets']
-            return stylesheets
-        else:
-            return u''
-
-@register.tag
-def renderscripts(parser, token):
-    return RenderMarkupScriptsNode()
-
-class RenderMarkupScriptsNode(template.Node):
-    def render(self, context):
-        if 'markup_scripts' in context:
-            scripts = "".join(context['markup_scripts'])
-            del context['markup_scripts']
-            return scripts
-        else:
-            return u''
+@register.filter
+def content_stylesheets(stylesheets):
+    output = ""
+    for stylesheet in stylesheets:
+        output += 'jQuery.loadStyleSheet("%s", "%s");\n' % (html.escapejs(stylesheet['href']), html.escapejs(stylesheet.get('type', 'text/css')))
+    if output:
+        output = '<script type="text/javascript">\n' + output + '</script>\n'
+    return safestring.mark_safe(output)
