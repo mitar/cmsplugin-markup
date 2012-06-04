@@ -1,9 +1,5 @@
-include CHANGELOG
-include INSTALL
+recursive-include cmsplugin_markup/static *
+recursive-include cmsplugin_markup/templates *.html
+include COPYING
 include LICENSE
-include MANIFEST.in
-include README
-include AUTHORS
-recursive-include docs *
-recursive-include cmsplugin_markup *
-
+include *.py *.txt *.rst
