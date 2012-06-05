@@ -1,5 +1,6 @@
 recursive-include cmsplugin_markup/static *
 recursive-include cmsplugin_markup/templates *.html
+include docs/Makefile docs/*.py docs/*.rst
 include COPYING
 include LICENSE
 include *.py *.txt *.rst
