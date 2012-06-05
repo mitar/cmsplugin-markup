@@ -1,3 +1,6 @@
+cmsplugin-markup
+================
+
 An extendable markup content plugin for `Django CMS`_. It allows you to use
 various markup languages for content. It is extendable through its own markup
 plugin system so additional markup languages can be supported. By default it
