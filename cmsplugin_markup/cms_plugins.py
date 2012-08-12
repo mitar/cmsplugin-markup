@@ -7,7 +7,7 @@ from cms.models import pluginmodel
 
 from cmsplugin_markup.utils import markup
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
@@ -22,6 +22,16 @@ class MarkupPlugin(CMSPluginBase):
     form = MarkupForm
     render_template = 'cmsplugin_markup/markup.html'
     change_form_template = 'cmsplugin_markup/markup_plugin_change_form.html'
+
+    fieldsets = (
+        (None, {
+            'fields': ('body', 'markup')
+        }),
+        (_('Advanced options'), {
+            'classes': ('collapse',),
+            'fields': ('dynamic', 'css_class')
+        }),
+    )
 
     def render(self, context, instance, placeholder):
         context.update({

@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
 from django.utils.html import strip_tags
 from django.utils.text import truncate_words
@@ -16,12 +16,13 @@ class MarkupField(CMSPlugin):
     body_scripts = models.TextField(blank=True)
     body_stylesheets = models.TextField(blank=True)
     markup = models.CharField(
-            _('Markup'),
-            max_length=20,
-            choices=MARKUP_CHOICES,
-            default=MARKUP_CHOICES[0][0] if len(MARKUP_CHOICES) == 1 else models.NOT_PROVIDED,
-            )
+        _('Markup'),
+        max_length=20,
+        choices=MARKUP_CHOICES,
+        default=MARKUP_CHOICES[0][0] if len(MARKUP_CHOICES) == 1 else models.NOT_PROVIDED,
+    )
     dynamic = models.BooleanField(_('Render every time'), default=settings.CMS_MARKUP_RENDER_ALWAYS, help_text=_('Should be the content rendered every time the page is displayed or should it be rendered only when saved?'))
+    css_class = models.CharField(_('CSS class'), max_length=255, blank=True, help_text=_('Wrap plugin output in a &lt;div&gt; with this CSS class.'))
 
     search_fields = ('body_html',)
 
