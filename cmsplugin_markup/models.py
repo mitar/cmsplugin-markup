@@ -33,8 +33,8 @@ class MarkupField(CMSPlugin):
         # We store it in any case to also check the parser for possible exceptions and to use it for __unicode__
         (content, parser) = utils.markup_parser(self.body, self.markup)
         self.body_html = content
-        self.body_scripts = parser.get_scripts()
-        self.body_stylesheets = parser.get_stylesheets()
+        self.body_scripts = '\n'.join(parser.get_scripts())
+        self.body_stylesheets = '\n'.join(parser.get_stylesheets())
         if not utils.get_markup_object(self.markup).is_dynamic:
             self.dynamic = False
         return super(MarkupField, self).save(*args, **kwargs)
@@ -46,8 +46,8 @@ class MarkupField(CMSPlugin):
             context['markup_stylesheets'] = context.get('markup_stylesheets', []) + parser.get_stylesheets()
             return mark_safe(content)
         else:
-            context['markup_scripts'] = context.get('markup_scripts', []) + self.body_scripts
-            context['markup_stylesheets'] = context.get('markup_stylesheets', []) + self.body_stylesheets
+            context['markup_scripts'] = context.get('markup_scripts', []) + self.body_scripts.split('\n')
+            context['markup_stylesheets'] = context.get('markup_stylesheets', []) + self.body_stylesheets.split('\n')
             return mark_safe(self.body_html)
 
     def clean_plugins(self):
