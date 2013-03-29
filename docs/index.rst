@@ -45,17 +45,17 @@ through its own :ref:`markup plugin API <markup plugin API>`.
 For example, there exists a plugin_ for Trac_ wiki engine with powerful markup
 language (with its own macros and plugins).
 
-.. _plugin: https://bitbucket.org/mitar/cmsplugin-markup-tracwiki
+.. _plugin: https://github.com/mitar/cmsplugin-markup
 .. _Trac: http://trac.edgewall.org/
 
 Source Code and Issue Tracker
 -----------------------------
 
-For development Bitbucket_ is used, so source code and issue tracker is found
+For development GitHub_ is used, so source code and issue tracker is found
 there_.
 
-.. _Bitbucket: https://bitbucket.org/
-.. _there: https://bitbucket.org/mitar/cmsplugin-markup
+.. _GitHub: https://github.com
+.. _there: https://github.com/mitar/cmsplugin-markup
 
 Indices and tables
 ==================
