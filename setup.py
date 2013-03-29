@@ -14,7 +14,7 @@ if __name__ == '__main__':
         long_description = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read(),
         author = 'Mitar',
         author_email = 'mitar.django@tnode.com',        
-        url = 'https://bitbucket.org/mitar/cmsplugin-markup',
+        url = 'http://mitar.tnode.com/',
         license = 'AGPLv3',
         packages = find_packages(),
         package_data = {},
@@ -25,6 +25,7 @@ if __name__ == '__main__':
             'License :: OSI Approved :: GNU Affero General Public License v3',
             'Operating System :: OS Independent',
             'Programming Language :: Python',
+            'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
             'Framework :: Django',
         ],
         include_package_data = True,
@@ -34,5 +35,6 @@ if __name__ == '__main__':
             'Markdown>=2',
             'Textile>=2.1',
             'docutils>=0.7',
+            'django-cms>=2.2',
         ],
     )
