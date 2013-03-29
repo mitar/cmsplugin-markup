@@ -49,3 +49,7 @@ div.django-grip {
 .iftextplugins {
 	display: none;
 }
+
+#id_body {
+	font-family: monospace;
+}
