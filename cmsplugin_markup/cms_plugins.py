@@ -44,7 +44,10 @@ class MarkupPlugin(CMSPluginBase):
         obj.clean_plugins()
         super(MarkupPlugin, self).save_model(request, obj, form, change)
 
-    def change_view(self, request, object_id, extra_context={}):
+    def change_view(self, request, object_id, extra_context=None):
+        if extra_context is None:
+            extra_context = {}
+
         extra_context.update({
             'text_plugins': [p() for p in plugin_pool.get_text_enabled_plugins(self.placeholder, self.page)],
             'name': 'markupeditor',
@@ -53,7 +56,10 @@ class MarkupPlugin(CMSPluginBase):
         })
         return super(MarkupPlugin, self).change_view(request, object_id, extra_context=extra_context)
 
-    def add_view(self, request, form_url='', extra_context={}):
+    def add_view(self, request, form_url='', extra_context=None):
+        if extra_context is None:
+            extra_context = {}
+
         extra_context.update({
             'text_plugins': [p() for p in plugin_pool.get_text_enabled_plugins(self.placeholder, self.page)],
             'name': 'markupeditor',
