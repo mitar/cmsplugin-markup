@@ -68,7 +68,7 @@ class MarkupPlugin(CMSPluginBase):
         return super(MarkupPlugin, self).add_view(request, form_url, extra_context=extra_context);
 
     def get_plugin_urls(self):
-        from django.conf.urls.defaults import patterns, url
+        from django.conf.urls import patterns, url
 
         # If django-cms has get_plugin_urls feature or not
         urls = getattr(super(MarkupPlugin, self), 'get_plugin_urls', lambda: [])()
