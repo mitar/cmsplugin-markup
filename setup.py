@@ -30,6 +30,7 @@ if __name__ == '__main__':
         ],
         include_package_data = True,
         zip_safe = False,
+        test_suite = "runtests.runtests",
         install_requires = [
             'Django>1.4',
             'Markdown>2',
