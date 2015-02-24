@@ -36,6 +36,12 @@ above base URL.
 
 .. _PyPi: http://pypi.python.org/pypi
 
+For django 1.7 add this to your settings:
+
+    MIGRATION_MODULES = {
+        'cmsplugin_markup': 'cmsplugin_markup.migrations_django',
+    }
+
 Markup Plugins
 --------------
 
