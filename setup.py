@@ -36,5 +36,6 @@ if __name__ == '__main__':
             'Textile>=2.1',
             'docutils>=0.7',
             'django-cms>=2.2',
+            'python-creole',
         ],
     )
