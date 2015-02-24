@@ -6,20 +6,22 @@ from django.db import models, migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = []
+    dependencies = [
+        ('cms', '0001_initial'),
+    ]
 
     operations = [
         migrations.CreateModel(
             name='MarkupField',
             fields=[
-                ('cmsplugin_ptr', models.OneToOneField(auto_created=True, to='cms.CMSPlugin', parent_link=True, serialize=False, primary_key=True)),
+                ('cmsplugin_ptr', models.OneToOneField(primary_key=True, serialize=False, parent_link=True, auto_created=True, to='cms.CMSPlugin')),
                 ('body', models.TextField(verbose_name='Body')),
                 ('body_html', models.TextField(blank=True)),
                 ('body_scripts', models.TextField(blank=True)),
                 ('body_stylesheets', models.TextField(blank=True)),
-                ('markup', models.CharField(verbose_name='Markup', max_length=20, default='Creole', choices=[('Creole', 'Creole')])),
-                ('dynamic', models.BooleanField(verbose_name='Render every time', default=True, help_text='Should be the content rendered every time the page is displayed or should it be rendered only when saved?')),
-                ('css_class', models.CharField(blank=True, verbose_name='CSS class', max_length=255, help_text='Wrap plugin output in a &lt;div&gt; with this CSS class.')),
+                ('markup', models.CharField(choices=[('Creole', 'Creole')], default='Creole', verbose_name='Markup', max_length=20)),
+                ('dynamic', models.BooleanField(default=True, help_text='Should be the content rendered every time the page is displayed or should it be rendered only when saved?', verbose_name='Render every time')),
+                ('css_class', models.CharField(verbose_name='CSS class', blank=True, help_text='Wrap plugin output in a &lt;div&gt; with this CSS class.', max_length=255)),
             ],
             options={
                 'abstract': False,
