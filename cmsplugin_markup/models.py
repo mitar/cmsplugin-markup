@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
 from django.utils.html import strip_tags
-from django.utils.text import truncate_words
+from django.utils.text import Truncator
 from django.conf import settings
 from cms.models import CMSPlugin
 
@@ -27,7 +27,7 @@ class MarkupField(CMSPlugin):
     search_fields = ('body_html',)
 
     def __unicode__(self):
-        return u'%s' %(truncate_words(strip_tags(self.body_html), 3)[:30]+'...')
+        return Truncator(strip_tags(self.body_html)).chars(30, html=True)
 
     def save(self, *args, **kwargs):
         # We store it in any case to also check the parser for possible exceptions and to use it for __unicode__

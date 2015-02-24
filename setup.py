@@ -31,10 +31,10 @@ if __name__ == '__main__':
         include_package_data = True,
         zip_safe = False,
         install_requires = [
-            'Django>=1.2',
-            'Markdown>=2',
-            'Textile>=2.1',
-            'docutils>=0.7',
-            'django-cms>=2.2',
+            'Django>1.4',
+            'Markdown>2',
+            'Textile>2.1',
+            'docutils>0.7',
+            'django-cms>3.0',
         ],
     )
