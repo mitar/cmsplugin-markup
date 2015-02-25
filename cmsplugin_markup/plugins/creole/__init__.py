@@ -4,7 +4,7 @@ from cmsplugin_markup.plugins import MarkupBase
 class Markup(MarkupBase):
 
     name = 'Creole'
-    identifier = 'Creole'
+    identifier = 'creole'
 
     def parse(self, value, context=None, placeholder=None):
         try:
