@@ -45,3 +45,5 @@ CMS_MARKUP_OPTIONS = (
     'cmsplugin_markup.plugins.creole',
 )
 CMS_MARKUP_RENDER_ALWAYS = True
+
+CMS_MARKDOWN_EXTENSIONS = ()
