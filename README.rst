@@ -11,6 +11,8 @@ supports Markdown_, reST_ and Textile_ markup languages.
 .. _reST: http://docutils.sourceforge.net/rst.html
 .. _Textile: http://textile.sitemonks.com/
 
+There is also a `html` dummy plugin, to add html code directly into a cms page.
+
 Documentation is found at:
 
 http://cmsplugin-markup.readthedocs.org/

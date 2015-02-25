@@ -11,6 +11,8 @@ supports Markdown_, reST_ and Textile_ markup languages.
 .. _reST: http://docutils.sourceforge.net/rst.html
 .. _Textile: http://textile.sitemonks.com/
 
+There is also a `html` dummy plugin, to add html code directly into a cms page.
+
 Installation
 ------------
 
@@ -35,6 +37,35 @@ This will also allow markup plugins to handle their own additional URLs under
 above base URL.
 
 .. _PyPi: http://pypi.python.org/pypi
+
+Add this to your settings::
+
+    MIGRATION_MODULES = {
+        'cmsplugin_markup': 'cmsplugin_markup.migrations_django',
+    }
+    CMS_MARKUP_OPTIONS = (
+        'cmsplugin_markup.plugins.markdown',
+        'cmsplugin_markup.plugins.textile',
+        'cmsplugin_markup.plugins.restructuredtext',
+    )
+    CMS_MARKUP_RENDER_ALWAYS = True
+
+    CMS_MARKDOWN_EXTENSIONS = ()
+
+html plugin
+-----------
+
+You can insert html source code with the `html` plugin.
+
+Big warning: If you also activate the `html` plugin, every user with page permissions
+can inject javascript code!
+
+To activate, just add it in your settings::
+
+    CMS_MARKUP_OPTIONS = (
+        'cmsplugin_markup.plugins.html', # WARNING: javascript code injection!
+        ...
+    )
 
 Markup Plugins
 --------------
