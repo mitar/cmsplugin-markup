@@ -4,12 +4,17 @@ from django.utils.safestring import mark_safe
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
 from django.conf import settings
+from cms.utils.compat.dj import python_2_unicode_compatible
+
 from cms.models import CMSPlugin
 
 from cmsplugin_markup import utils
 
+
 MARKUP_CHOICES = utils.compile_markup_choices(settings.CMS_MARKUP_OPTIONS)
 
+
+@python_2_unicode_compatible
 class MarkupField(CMSPlugin):
     body = models.TextField(_('Body'))
     body_html = models.TextField(blank=True)
@@ -26,8 +31,12 @@ class MarkupField(CMSPlugin):
 
     search_fields = ('body_html',)
 
-    def __unicode__(self):
-        return Truncator(strip_tags(self.body_html)).chars(30, html=True)
+    def __str__(self):
+        content = "<strong>%s</strong>: %s" % (
+            self.markup,
+            Truncator(strip_tags(self.body_html)).chars(30, html=True)
+        )
+        return mark_safe(content)
 
     def save(self, *args, **kwargs):
         # We store it in any case to also check the parser for possible exceptions and to use it for __unicode__
