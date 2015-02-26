@@ -12,6 +12,8 @@ supports Markdown_, reST_, Textile_ and Creole_ markup languages.
 .. _Textile: http://textile.sitemonks.com/
 .. _Creole: https://code.google.com/p/python-creole/
 
+There is also a `html` dummy plugin, to add html code directly into a cms page.
+
 Documentation is found at:
 
 http://cmsplugin-markup.readthedocs.org/

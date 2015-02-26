@@ -12,6 +12,8 @@ supports Markdown_, reST_, Textile_ and Creole_ markup languages.
 .. _Textile: http://textile.sitemonks.com/
 .. _Creole: https://code.google.com/p/python-creole/
 
+There is also a `html` dummy plugin, to add html code directly into a cms page.
+
 Installation
 ------------
 
@@ -36,7 +38,6 @@ This will also allow markup plugins to handle their own additional URLs under
 above base URL.
 
 .. _PyPi: http://pypi.python.org/pypi
-
 Add this to your settings::
 
     MIGRATION_MODULES = {
@@ -51,6 +52,21 @@ Add this to your settings::
     CMS_MARKUP_RENDER_ALWAYS = True
 
     CMS_MARKDOWN_EXTENSIONS = ()
+
+html plugin
+-----------
+
+You can insert html source code with the `html` plugin.
+
+Big warning: If you also activate the `html` plugin, every user with page permissions
+can inject javascript code!
+
+To activate, just add it in your settings::
+
+    CMS_MARKUP_OPTIONS = (
+        'cmsplugin_markup.plugins.html', # WARNING: javascript code injection!
+        ...
+    )
 
 Markup Plugins
 --------------
