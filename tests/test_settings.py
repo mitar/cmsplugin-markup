@@ -26,10 +26,13 @@ INSTALLED_APPS = [
     "cmsplugin_markup",
 ]
 
+TEMP_DIR = tempfile.mkdtemp(prefix="cms_markup_unittest_")
+print("Use temp dir: %r" % TEMP_DIR)
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(tempfile.tempdir or ".", 'cmsplugin_markup_unittest_database'),
+        'NAME': os.path.join(TEMP_DIR, 'cmsplugin_markup_unittest_database'),
     }
 }
 
