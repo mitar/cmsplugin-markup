@@ -38,7 +38,7 @@ def compile_markup_choices(markup_options):
     choices = []
     objects = get_list_of_markup_classes(markup_options)
 
-    for identifier, markup_object in objects.iteritems():
+    for identifier, markup_object in objects.items():
         choices.append((identifier, markup_object.name))
 
     return tuple(choices)

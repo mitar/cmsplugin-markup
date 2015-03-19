@@ -1,7 +1,10 @@
+from __future__ import unicode_literals
+
 from django.conf import settings
-from django.utils.encoding import smart_str, force_unicode
+from django.utils.encoding import smart_bytes, force_text
 
 from cmsplugin_markup.plugins import MarkupBase
+
 
 class Markup(MarkupBase):
 
@@ -12,7 +15,7 @@ class Markup(MarkupBase):
         try:
             import markdown
         except ImportError:
-            return force_unicode(value)
+            return force_text(value)
         else:
             if hasattr(markdown, 'version'):
                 extensions = settings.CMS_MARKDOWN_EXTENSIONS
@@ -23,10 +26,10 @@ class Markup(MarkupBase):
                     safe_mode = False
 
                 if getattr(markdown, 'version_info', None) < (1,7):
-                    return force_unicode(markdown.markdown(smart_str(value),
+                    return force_text(markdown.markdown(smart_bytes(value),
                                 extensions, safe_mode=safe_mode))
                 else:
-                    return markdown.markdown(force_unicode(value), extensions,
+                    return markdown.markdown(force_text(value), extensions,
                                 safe_mode=safe_mode)
             else:
-                return force_unicode(markdown.markdown(smart_str(value)))
+                return force_text(markdown.markdown(smart_bytes(value)))

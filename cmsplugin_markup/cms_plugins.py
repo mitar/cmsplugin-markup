@@ -21,7 +21,7 @@ class MarkupPlugin(CMSPluginBase):
     name = _('Markup')
     form = MarkupForm
     render_template = 'cmsplugin_markup/markup.html'
-    change_form_template = 'cmsplugin_markup/markup_plugin_change_form.html'
+    # change_form_template = 'cmsplugin_markup/markup_plugin_change_form.html'
 
     fieldsets = (
         (None, {

@@ -4,12 +4,13 @@ cmsplugin-markup's documentation
 An extendable markup content plugin for `Django CMS`_. It allows you to use
 various markup languages for content. It is extendable through its own markup
 plugin system so additional markup languages can be supported. By default it
-supports Markdown_, reST_ and Textile_ markup languages.
+supports Markdown_, reST_, Textile_ and Creole_ markup languages.
 
 .. _Django CMS: https://www.django-cms.org/
 .. _Markdown: http://daringfireball.net/projects/markdown/
 .. _reST: http://docutils.sourceforge.net/rst.html
 .. _Textile: http://textile.sitemonks.com/
+.. _Creole: https://code.google.com/p/python-creole/
 
 Installation
 ------------
@@ -35,6 +36,21 @@ This will also allow markup plugins to handle their own additional URLs under
 above base URL.
 
 .. _PyPi: http://pypi.python.org/pypi
+
+Add this to your settings::
+
+    MIGRATION_MODULES = {
+        'cmsplugin_markup': 'cmsplugin_markup.migrations_django',
+    }
+    CMS_MARKUP_OPTIONS = (
+        'cmsplugin_markup.plugins.markdown',
+        'cmsplugin_markup.plugins.textile',
+        'cmsplugin_markup.plugins.restructuredtext',
+        'cmsplugin_markup.plugins.creole',
+    )
+    CMS_MARKUP_RENDER_ALWAYS = True
+
+    CMS_MARKDOWN_EXTENSIONS = ()
 
 Markup Plugins
 --------------
