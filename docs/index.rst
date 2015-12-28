@@ -64,7 +64,7 @@ can inject javascript code!
 To activate, just add it in your settings::
 
     CMS_MARKUP_OPTIONS = (
-        'cmsplugin_markup.plugins.html', # WARNING: javascript code injection!
+        'cmsplugin_markup.plugins.html', # WARNING: javascript code injection will be possible!
         ...
     )
 
