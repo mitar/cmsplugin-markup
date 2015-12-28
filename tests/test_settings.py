@@ -2,9 +2,16 @@
 import os
 import tempfile
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.core.context_processors.request",
-)
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'DIRS': [],
+    'APP_DIRS': True,
+    'OPTIONS': {
+        'context_processors': [
+            'django.core.context_processors.request',
+        ],
+    },
+},]
 MIDDLEWARE_CLASSES = ()
 
 LANGUAGE_CODE = "en"
@@ -20,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sites',
 
-    'mptt',
+    'treebeard',
     "cms",
 
     "cmsplugin_markup",
@@ -37,7 +44,6 @@ DATABASES = {
 }
 
 MIGRATION_MODULES = {
-    'cms': 'cms.migrations_django',
     'cmsplugin_markup': 'cmsplugin_markup.migrations_django',
 }
 
