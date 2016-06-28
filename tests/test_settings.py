@@ -2,9 +2,6 @@
 import os
 import tempfile
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.core.context_processors.request",
-)
 MIDDLEWARE_CLASSES = ()
 
 LANGUAGE_CODE = "en"
@@ -15,13 +12,23 @@ SECRET_KEY = 'fake-key'
 
 SITE_ID = 1
 
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'OPTIONS': {
+        'context_processors': [
+            'django.core.context_processors.request',
+        ],
+    },
+},]
+
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sites',
 
-    'mptt',
     "cms",
+    'menus',
+    "treebeard",
 
     "cmsplugin_markup",
 ]
@@ -37,7 +44,6 @@ DATABASES = {
 }
 
 MIGRATION_MODULES = {
-    'cms': 'cms.migrations_django',
     'cmsplugin_markup': 'cmsplugin_markup.migrations_django',
 }
 
