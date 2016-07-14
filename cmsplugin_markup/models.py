@@ -75,5 +75,12 @@ class MarkupField(CMSPlugin):
         for new, old in ziplist:
             replace_ids[old.pk] = new.pk
 
-        self.body = utils.replace_plugins(old_instance.markupfield.body, replace_ids, self.markup)
-        self.save()
+        try:
+            old_body = old_instance.markupfield.body
+        except AttributeError:
+            # FIXME: AttributeError: 'CMSPlugin' object has no attribute 'markupfield'
+            # see: https://github.com/mitar/cmsplugin-markup/issues/10
+            return
+        else:
+            self.body = utils.replace_plugins(old_body, replace_ids, self.markup)
+            self.save()
