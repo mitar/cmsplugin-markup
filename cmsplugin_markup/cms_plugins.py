@@ -68,13 +68,13 @@ class MarkupPlugin(CMSPluginBase):
         return super(MarkupPlugin, self).add_view(request, form_url, extra_context=extra_context);
 
     def get_plugin_urls(self):
-        from django.conf.urls import patterns, url
+        from django.conf.urls import url
 
         # If django-cms has get_plugin_urls feature or not
         urls = getattr(super(MarkupPlugin, self), 'get_plugin_urls', lambda: [])()
-        preview_urls = patterns('',
+        preview_urls = [
             url(r'^preview/$', admin.site.admin_view(self.preview), name='cmsplugin_markup_preview'),
-        )
+        ]
 
         plugin_urls = []
         for c in utils.get_list_of_markup_classes().values():
