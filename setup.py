@@ -32,8 +32,8 @@ if __name__ == '__main__':
         zip_safe = False,
         test_suite = "runtests.runtests",
         install_requires = [
-            'Django>1.4',
-            'Markdown>2',
+            'Django>1.10',
+            'Markdown>3',
             'Textile>2.1',
             'docutils>0.7',
             'django-cms>3.0',

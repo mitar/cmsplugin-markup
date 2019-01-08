@@ -51,6 +51,7 @@ Add this to your settings::
     )
     CMS_MARKUP_RENDER_ALWAYS = True
 
+    # see: https://python-markdown.github.io/reference/#extensions
     CMS_MARKDOWN_EXTENSIONS = ()
 
 html plugin
