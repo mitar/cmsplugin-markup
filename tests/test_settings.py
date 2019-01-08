@@ -43,10 +43,6 @@ DATABASES = {
     }
 }
 
-MIGRATION_MODULES = {
-    'cmsplugin_markup': 'cmsplugin_markup.migrations_django',
-}
-
 CMS_MARKUP_OPTIONS = (
     'cmsplugin_markup.plugins.markdown',
     'cmsplugin_markup.plugins.textile',
