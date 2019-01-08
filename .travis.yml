@@ -5,15 +5,46 @@ language: python
 sudo: required
 dist: xenial
 
-python:
-  - "2.7"
-  - "3.5"
-  - "3.6"
-  - "3.7"
-  -
-# command to install dependencies
+cache:
+    directories:
+        - $HOME/.pip-accel
+        - $HOME/.cache/pip
+
+matrix:
+    allow_failures:
+        - python: pypy3
+    fast_finish: true
+    include:
+         #
+         # Generated from 'tox -l' with tox2travis.py
+         # https://github.com/jedie/python-code-snippets/blob/master/CodeSnippets/tox2travis.py
+         #
+        - env: TOXENV=py36-django111
+          python: 3.6
+        - env: TOXENV=py36-django2
+          python: 3.6
+
+        - env: TOXENV=py37-django111
+          python: 3.7
+        - env: TOXENV=py37-django2
+          python: 3.7
+
+        - env: TOXENV=pypy3-django111
+          python: pypy3
+        - env: TOXENV=pypy3-django2
+          python: pypy3
+
+
 install:
-  - "pip install ."
-  - 
-# command to run tests
-script: python runtests.py
+    # install only the needed package to run tox
+    # tox will install all needed packages
+    - travis_retry pip install tox coveralls
+
+script:
+    - tox
+
+after_success:
+    # https://github.com/codecov/codecov-bash
+    - bash <(curl -s https://codecov.io/bash)
+    - coveralls
+
