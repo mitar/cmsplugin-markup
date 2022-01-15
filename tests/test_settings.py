@@ -12,6 +12,7 @@ TEMPLATES = [{
         ],
     },
 },]
+
 MIDDLEWARE_CLASSES = ()
 
 LANGUAGE_CODE = "en"
@@ -22,13 +23,23 @@ SECRET_KEY = 'fake-key'
 
 SITE_ID = 1
 
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'OPTIONS': {
+        'context_processors': [
+            'django.core.context_processors.request',
+        ],
+    },
+},]
+
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sites',
 
-    'treebeard',
     "cms",
+    'menus',
+    "treebeard",
 
     "cmsplugin_markup",
 ]
@@ -41,10 +52,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(TEMP_DIR, 'cmsplugin_markup_unittest_database'),
     }
-}
-
-MIGRATION_MODULES = {
-    'cmsplugin_markup': 'cmsplugin_markup.migrations_django',
 }
 
 CMS_MARKUP_OPTIONS = (

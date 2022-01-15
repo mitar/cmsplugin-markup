@@ -1,6 +1,11 @@
+.*
+
 /dist
 /build
 _build
 *.pyc
 *.swp
 *.egg-info
+
+# https://github.com/jedie/python-code-snippets/blob/master/CodeSnippets/tox2travis.py
+tox2travis.py
