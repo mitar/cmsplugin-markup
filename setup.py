@@ -4,7 +4,7 @@ import os
 
 from setuptools import setup, find_packages
 
-VERSION = '0.2.4'
+VERSION = '0.3.0'
 
 if __name__ == '__main__':
     setup(
@@ -32,7 +32,7 @@ if __name__ == '__main__':
         zip_safe = False,
         test_suite = "runtests.runtests",
         install_requires = [
-            'Django>1.4',
+            'Django>1.4,<=1.8',
             'Markdown>2',
             'Textile>2.1',
             'docutils>0.7',
